@@ -1,0 +1,474 @@
+Creating tables code
+-- =========================
+-- TABLE: roles  (roles.csv)
+-- Headers: role_code, role_description
+-- =========================
+CREATE TABLE roles (
+    role_code integer PRIMARY KEY,
+    role_description varchar(50)
+);
+
+-- =========================
+-- TABLE: medical_group (medical_group.csv)
+-- Headers: medical_group_code, medical_group_name, state, region, street, city, zip_code, area_code, phone_number, medical_director_code
+-- =========================
+CREATE TABLE medical_group (
+    medical_group_code integer PRIMARY KEY,
+    medical_group_name varchar(80),
+    state varchar(20),
+    region varchar(10),
+    street varchar(100),
+    city varchar(50),
+    zip_code varchar(10),
+    area_code varchar(5),
+    phone_number varchar(15),
+    medical_director_code integer
+);
+
+-- =========================
+-- TABLE: hospitals (hospitals.csv)
+-- Headers: unique_id, hospital_name, hospital_state, notes
+-- =========================
+CREATE TABLE hospitals (
+    unique_id integer PRIMARY KEY,
+    hospital_name varchar(100),
+    hospital_state varchar(20),
+    notes varchar(200)
+);
+
+-- =========================
+-- TABLE: doctors_information (doctors_information.csv)
+-- Headers: unique_id,last_name,first_name,address,city,state,zip_code,date_of_birth,mobile_number,role_code,work_state
+-- NOTE: dates stored as text for clean import
+-- =========================
+CREATE TABLE doctors_information (
+    unique_id integer PRIMARY KEY,
+    last_name varchar(50),
+    first_name varchar(50),
+    address varchar(120),
+    city varchar(50),
+    state varchar(20),
+    zip_code varchar(10),
+    date_of_birth_text varchar(20),
+    mobile_number varchar(20),
+    role_code integer,
+    work_state varchar(20)
+);
+
+-- =========================
+-- TABLE: staff_information (staff_information.csv)
+-- Headers: unique_id,last_name,first_name,address,city,state,zip_code,date_of_birth,mobile_number,role_code,medical_group_code,salary,date_hired,separation_date
+-- NOTE: dates stored as text for clean import
+-- =========================
+CREATE TABLE staff_information (
+    unique_id integer PRIMARY KEY,
+    last_name varchar(50),
+    first_name varchar(50),
+    address varchar(120),
+    city varchar(50),
+    state varchar(20),
+    zip_code varchar(10),
+    date_of_birth_text varchar(20),
+    mobile_number varchar(20),
+    role_code integer,
+    medical_group_code integer,
+    salary numeric(12,2),
+    date_hired_text varchar(20),
+    separation_date_text varchar(20)
+);
+
+-- =========================
+-- TABLE: patient_information (patient_information.csv)
+-- Headers: unique_id,last_name,first_name,address,city,state,zip,date_of_birth,mobile_number,insurance_provider
+-- NOTE: dates stored as text for clean import
+-- =========================
+CREATE TABLE patient_information (
+    unique_id integer PRIMARY KEY,
+    last_name varchar(50),
+    first_name varchar(50),
+    address varchar(120),
+    city varchar(50),
+    state varchar(20),
+    zip varchar(10),
+    date_of_birth_text varchar(20),
+    mobile_number varchar(20),
+    insurance_provider varchar(80)
+);
+
+-- =========================
+-- TABLE: privileges (privileges.csv)
+-- Headers: privilege_code, privilege_name, privilege_description
+-- =========================
+CREATE TABLE privileges (
+    privilege_code integer PRIMARY KEY,
+    privilege_name varchar(80),
+    privilege_description varchar(200)
+);
+
+-- =========================
+-- TABLE: procedures (procedures.csv)
+-- Headers: procedure_code, procedure_name, procedure_description, procedure_cost, in_house
+-- NOTE: procedure_cost stored as text because CSV has $ and spaces
+-- =========================
+CREATE TABLE procedures (
+    procedure_code integer PRIMARY KEY,
+    procedure_name varchar(120),
+    procedure_description varchar(400),
+    procedure_cost_text varchar(30),
+    in_house boolean
+);
+
+-- =========================
+-- TABLE: doctor_privileges (doctor_privileges.csv)
+-- Headers: unique_id, doctor_code, hospital_code, privilege_code
+-- =========================
+CREATE TABLE doctor_privileges (
+    unique_id integer PRIMARY KEY,
+    doctor_code integer,
+    hospital_code integer,
+    privilege_code integer
+);
+
+-- =========================
+-- TABLE: doctor_certifications (doctor_certifications.csv)
+-- Headers: unique_id, doctor_code, certification_code, certification_name, awarding_group, certification_date, expiration_date
+-- NOTE: dates stored as text for clean import
+-- =========================
+CREATE TABLE doctor_certifications (
+    unique_id integer PRIMARY KEY,
+    doctor_code integer,
+    certification_code integer,
+    certification_name varchar(150),
+    awarding_group varchar(100),
+    certification_date_text varchar(20),
+    expiration_date_text varchar(20)
+);
+
+-- =========================
+-- TABLE: visits (visits.csv)
+-- Headers: unique_id, patient_code, date_of_visit, medical_group_code, doctor_code, procedure_code
+-- NOTE: date stored as text for clean import
+-- =========================
+CREATE TABLE visits (
+    unique_id integer PRIMARY KEY,
+    patient_code integer,
+    date_of_visit_text varchar(20),
+    medical_group_code integer,
+    doctor_code integer,
+    procedure_code integer
+);
+
+-- =========================
+-- TABLE: referrals (referrals.csv)
+-- Headers: unique_id, doctor_code, patient_code, procedure_code, hospital_code, referring_doctor, referral_date
+-- NOTE: referring_doctor appears as text in your sample (e.g., 'HSU')
+-- NOTE: date stored as text for clean import
+-- =========================
+CREATE TABLE referrals (
+    unique_id integer PRIMARY KEY,
+    doctor_code integer,
+    patient_code integer,
+    procedure_code integer,
+    hospital_code integer,
+    referring_doctor varchar(20),
+    referral_date_text varchar(20)
+);
+Foreign Keys 
+-- Staff foreign keys
+ALTER TABLE staff_information
+ADD CONSTRAINT fk_staff_role
+FOREIGN KEY (role_code) REFERENCES roles(role_code);
+
+ALTER TABLE staff_information
+ADD CONSTRAINT fk_staff_medical_group
+FOREIGN KEY (medical_group_code) REFERENCES medical_group(medical_group_code);
+
+-- Doctor foreign keys
+ALTER TABLE doctors_information
+ADD CONSTRAINT fk_doctor_specialty
+FOREIGN KEY (specialty_code) REFERENCES specialty(specialty_code);
+
+-- Visits foreign keys
+ALTER TABLE visits
+ADD CONSTRAINT fk_visit_patient
+FOREIGN KEY (patient_code) REFERENCES patient_information(patient_code);
+
+ALTER TABLE visits
+ADD CONSTRAINT fk_visit_doctor
+FOREIGN KEY (doctor_code) REFERENCES doctors_information(doctor_code);
+
+ALTER TABLE visits
+ADD CONSTRAINT fk_visit_medical_group
+FOREIGN KEY (medical_group_code) REFERENCES medical_group(medical_group_code);
+
+ALTER TABLE visits
+ADD CONSTRAINT fk_visit_procedure
+FOREIGN KEY (procedure_code) REFERENCES procedures(procedure_code);
+
+-- Doctor privileges foreign keys
+ALTER TABLE doctor_privileges
+ADD CONSTRAINT fk_dp_doctor
+FOREIGN KEY (doctor_code) REFERENCES doctors_information(doctor_code);
+
+ALTER TABLE doctor_privileges
+ADD CONSTRAINT fk_dp_hospital
+FOREIGN KEY (hospital_code) REFERENCES hospitals(hospital_code);
+
+ALTER TABLE doctor_privileges
+ADD CONSTRAINT fk_dp_privilege
+FOREIGN KEY (privilege_code) REFERENCES privileges(privilege_code);
+
+-- Doctor certifications foreign keys
+ALTER TABLE doctor_certifications
+ADD CONSTRAINT fk_dc_doctor
+FOREIGN KEY (doctor_code) REFERENCES doctors_information(doctor_code);
+
+-- Referrals foreign keys
+ALTER TABLE referrals
+ADD CONSTRAINT fk_ref_doctor
+FOREIGN KEY (doctor_code) REFERENCES doctors_information(doctor_code);
+
+ALTER TABLE referrals
+ADD CONSTRAINT fk_ref_patient
+FOREIGN KEY (patient_code) REFERENCES patient_information(patient_code);
+
+ALTER TABLE referrals
+ADD CONSTRAINT fk_ref_procedure
+FOREIGN KEY (procedure_code) REFERENCES procedures(procedure_code);
+
+ALTER TABLE referrals
+ADD CONSTRAINT fk_ref_hospital
+FOREIGN KEY (hospital_code) REFERENCES hospitals(hospital_code);
+
+ALTER TABLE referrals
+ADD CONSTRAINT fk_ref_referring_doctor
+FOREIGN KEY (referring_doctor) REFERENCES doctors_information(doctor_code);
+
+
+Sanity Checks
+SELECT COUNT(*) AS roles_rows FROM roles;
+SELECT COUNT(*) AS doctors_rows FROM doctors_information;
+SELECT COUNT(*) AS patients_rows FROM patient_information;
+SELECT COUNT(*) AS visits_rows FROM visits;
+SELECT COUNT(*) AS referrals_rows FROM referrals;
+SELECT COUNT(*) AS procedures_rows FROM procedures;
+
+-- Doctors
+ALTER TABLE doctors_information ADD COLUMN IF NOT EXISTS date_of_birth date;
+UPDATE doctors_information
+SET date_of_birth = to_date(date_of_birth_text, 'MM/DD/YYYY')
+WHERE date_of_birth IS NULL AND date_of_birth_text IS NOT NULL AND date_of_birth_text <> '';
+
+-- Staff
+ALTER TABLE staff_information ADD COLUMN IF NOT EXISTS date_of_birth date;
+ALTER TABLE staff_information ADD COLUMN IF NOT EXISTS date_hired date;
+ALTER TABLE staff_information ADD COLUMN IF NOT EXISTS separation_date date;
+
+UPDATE staff_information
+SET date_of_birth = to_date(date_of_birth_text, 'MM/DD/YYYY')
+WHERE date_of_birth IS NULL AND date_of_birth_text IS NOT NULL AND date_of_birth_text <> '';
+
+UPDATE staff_information
+SET date_hired = to_date(date_hired_text, 'MM/DD/YYYY')
+WHERE date_hired IS NULL AND date_hired_text IS NOT NULL AND date_hired_text <> '';
+
+UPDATE staff_information
+SET separation_date = to_date(separation_date_text, 'MM/DD/YYYY')
+WHERE separation_date IS NULL AND separation_date_text IS NOT NULL AND separation_date_text <> '';
+
+-- Patients
+ALTER TABLE patient_information ADD COLUMN IF NOT EXISTS date_of_birth date;
+UPDATE patient_information
+SET date_of_birth = to_date(date_of_birth_text, 'MM/DD/YYYY')
+WHERE date_of_birth IS NULL AND date_of_birth_text IS NOT NULL AND date_of_birth_text <> '';
+
+-- Visits
+ALTER TABLE visits ADD COLUMN IF NOT EXISTS date_of_visit date;
+UPDATE visits
+SET date_of_visit = to_date(date_of_visit_text, 'MM/DD/YYYY')
+WHERE date_of_visit IS NULL AND date_of_visit_text IS NOT NULL AND date_of_visit_text <> '';
+
+-- Referrals
+ALTER TABLE referrals ADD COLUMN IF NOT EXISTS referral_date date;
+UPDATE referrals
+SET referral_date = to_date(referral_date_text, 'MM/DD/YYYY')
+WHERE referral_date IS NULL AND referral_date_text IS NOT NULL AND referral_date_text <> '';
+
+-- Doctor certifications
+ALTER TABLE doctor_certifications ADD COLUMN IF NOT EXISTS certification_date date;
+ALTER TABLE doctor_certifications ADD COLUMN IF NOT EXISTS expiration_date date;
+
+UPDATE doctor_certifications
+SET certification_date = to_date(certification_date_text, 'MM/DD/YYYY')
+WHERE certification_date IS NULL AND certification_date_text IS NOT NULL AND certification_date_text <> '';
+
+UPDATE doctor_certifications
+SET expiration_date = to_date(expiration_date_text, 'MM/DD/YYYY')
+WHERE expiration_date IS NULL AND expiration_date_text IS NOT NULL AND expiration_date_text <> '';
+
+ALTER TABLE procedures ADD COLUMN IF NOT EXISTS procedure_cost numeric(12,2);
+
+ALTER TABLE procedures ADD COLUMN IF NOT EXISTS procedure_cost numeric(12,2);
+
+UPDATE procedures
+SET procedure_cost =
+    NULLIF(regexp_replace(procedure_cost_text, '[$,\s]', '', 'g'), '')::numeric(12,2)
+WHERE procedure_cost IS NULL;
+
+Queries
+Q1: Which procedures bring in the most money?
+-- Revenue = number of times performed * procedure_cost
+
+SELECT
+    p.procedure_code,
+    p.procedure_name,
+    COUNT(*) AS times_performed,
+    p.procedure_cost,
+    ROUND(COUNT(*) * p.procedure_cost, 2) AS total_revenue
+FROM visits v
+JOIN procedures p
+  ON v.procedure_code = p.procedure_code
+GROUP BY
+    p.procedure_code,
+    p.procedure_name,
+    p.procedure_cost
+ORDER BY total_revenue DESC;
+ 
+
+Question 2: What days of the week are the busiest?
+Note: My pgAdmin runs on Mac and I run into a huge bug with the tool so I had to continue using Terminal on macOS which means the output isn’t as aesthetically pleasing but still correct.
+
+Case C - NL=# SELECT
+Case C - NL-#   trim(to_char(date_of_visit, 'Day')) AS day_of_week,
+Case C - NL-#   COUNT(*) AS total_visits
+Case C - NL-# FROM visits
+Case C - NL-# GROUP BY trim(to_char(date_of_visit, 'Day'))
+Case C - NL-# ORDER BY total_visits DESC;
+ 
+
+Q3: What doctor sees the most patients?
+-- Uses visits count per doctor (each visit = a patient encounter)
+
+SELECT
+  d.unique_id AS doctor_id,
+  d.last_name,
+  d.first_name,
+  COUNT(*) AS total_visits
+FROM visits v
+JOIN doctors_information d
+  ON v.doctor_code = d.unique_id
+GROUP BY d.unique_id, d.last_name, d.first_name
+ORDER BY total_visits DESC;
+
+ 
+
+
+Q4: How many times does a doctor refer patients?
+-- Counts referrals per doctor_code.
+
+SELECT
+  d.unique_id AS doctor_id,
+  d.last_name,
+  d.first_name,
+  COUNT(r.unique_id) AS total_referrals
+FROM referrals r
+JOIN doctors_information d
+  ON r.doctor_code = d.unique_id
+GROUP BY d.unique_id, d.last_name, d.first_name
+ORDER BY total_referrals DESC;
+ 
+
+Q5: Number of referrals for specific timeframes
+Q5a: Weekly referrals in 2022
+SELECT
+  extract(isoyear from referral_date) AS year,
+  extract(week from referral_date) AS week_number,
+  COUNT(*) AS total_referrals
+FROM referrals
+WHERE referral_date >= DATE '2022-01-01'
+  AND referral_date <  DATE '2023-01-01'
+GROUP BY
+  extract(isoyear from referral_date),
+  extract(week from referral_date)
+ORDER BY year, week_number;
+ 
+
+Q5b: Monthly referrals for first 6 months of 2023
+
+SELECT
+  to_char(referral_date, 'YYYY-MM') AS year_month,
+  COUNT(*) AS total_referrals
+FROM referrals
+WHERE referral_date >= DATE '2023-01-01'
+  AND referral_date <  DATE '2023-07-01'
+GROUP BY to_char(referral_date, 'YYYY-MM')
+ORDER BY year_month;
+
+ 
+
+Q5c: Annual referrals in 2024
+
+SELECT
+  extract(year from referral_date) AS year,
+  COUNT(*) AS total_referrals
+FROM referrals
+WHERE referral_date >= DATE '2024-01-01'
+  AND referral_date <  DATE '2025-01-01'
+GROUP BY extract(year from referral_date);
+
+ 
+
+Q6: Which doctors are associated with which hospital(s)?
+-- Uses doctor_privileges to map doctors to hospitals.
+
+SELECT DISTINCT
+  d.unique_id AS doctor_id,
+  d.last_name,
+  d.first_name,
+  h.unique_id AS hospital_id,
+  h.hospital_name,
+  h.hospital_state
+FROM doctor_privileges dp
+JOIN doctors_information d
+  ON dp.doctor_code = d.unique_id
+JOIN hospitals h
+  ON dp.hospital_code = h.unique_id
+ORDER BY d.last_name, d.first_name, h.hospital_name;
+
+ 
+Q7: What certifications are up for renewal? Which doctors have missing credentials?
+Q7a: Certifications up for renewal
+-- Shows certifications that are expired OR expiring within 6 months.
+SELECT
+  d.unique_id AS doctor_id,
+  d.last_name,
+  d.first_name,
+  dc.certification_code,
+  dc.certification_name,
+  dc.awarding_group,
+  dc.certification_date,
+  dc.expiration_date,
+  CASE
+    WHEN dc.expiration_date < CURRENT_DATE THEN 'EXPIRED'
+    ELSE 'EXPIRING_SOON'
+  END AS status
+FROM doctor_certifications dc
+JOIN doctors_information d
+  ON dc.doctor_code = d.unique_id
+WHERE dc.expiration_date IS NOT NULL
+  AND dc.expiration_date <= CURRENT_DATE + INTERVAL '6 months'
+ORDER BY dc.expiration_date, d.last_name;
+ 
+
+Q7b: Doctors with missing credentials (no certification records)
+
+SELECT
+  d.unique_id AS doctor_id,
+  d.last_name,
+  d.first_name
+FROM doctors_information d
+LEFT JOIN doctor_certifications dc
+  ON d.unique_id = dc.doctor_code
+WHERE dc.doctor_code IS NULL
+ORDER BY d.last_name, d.first_name;
+ 

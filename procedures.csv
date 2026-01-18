@@ -1,0 +1,11 @@
+﻿procedure_code,procedure_name,procedure_description,procedure_cost,in_house
+1001,Routine checkup (adult),"A routine checkup assesses health, screens for issues, and updates records.",$129.00 ,TRUE
+1002,Follow-up appointment,"A follow-up appointment reviews progress, adjusts treatments, and addresses concerns.",$65.00 ,TRUE
+1003,School physical,"A school physical evaluates health, ensures fitness, and clears for activities.",$85.00 ,TRUE
+1004,Minor surgery,A minor surgery involves small incisions to treat specific medical issues.,"$2,500.00 ",TRUE
+1005,Emergency visit,An emergency visit addresses urgent health issues requiring immediate medical attention.,"$6,000.00 ",FALSE
+1006,Lab tests,Lab tests analyze samples to diagnose conditions and monitor health.,$450.00 ,FALSE
+1007,Consultation,"A consultation involves discussing symptoms, concerns, and treatment options.",$250.00 ,TRUE
+1008,X-ray,An X-ray procedure uses radiation to create images of internal structures.,"$1,500.00 ",FALSE
+1009,Routine checkup (pediatric),"A routine checkup assesses health, screens for issues, and updates records.",$110.00 ,TRUE
+1010,Vaccination,A vaccination introduces a pathogen to boost immunity against specific diseases.,$55.00 ,TRUE

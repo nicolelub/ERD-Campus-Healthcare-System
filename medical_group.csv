@@ -1,0 +1,22 @@
+﻿medical_group_code,medical_group_name,state,region,street,city,zip_code,area_code,phone_number,medical_director_code
+1001,Northside Medical,ID,North,123 Maple St.,Boise,83701,208,5551234,8
+1002,Southern Health,ID,South,456 Oak Ave.,Twin Falls,83301,208,5555678,8
+1003,Eastern Wellness,ID,East,789 Pine Rd.,Idaho Falls,83401,208,5559876,8
+1004,Western Care,ID,West,101 Elm St.,Nampa,83651,208,5554321,8
+1005,Great Lakes Medical,IL,North,202 Cedar Dr.,Chicago,60601,312,5556543,3
+1006,Southern Illinois,IL,South,303 Birch Blvd.,Springfield,62701,217,5558765,3
+1007,Eastside Clinic,IL,East,404 Willow Ln.,Naperville,60540,630,5554325,3
+1008,Western Health,IL,West,505 Aspen Ct.,Peoria,61601,309,5556789,3
+1009,North Indiana Care,IN,North,606 Redwood St.,Fort Wayne,46801,260,5554326,16
+1010,Southside Clinic,IN,South,707 Hickory Dr.,Evansville,47701,812,5557654,16
+1011,Eastern Indiana,IN,East,808 Poplar Ave.,Bloomington,47401,812,5554567,16
+1012,Westside Health,IN,West,909 Spruce St.,Terre Haute,47801,812,5554327,16
+1013,Northern Missouri,MO,North,1010 Cypress Dr.,Kansas City,64101,816,5556548,19
+1014,Southern Missouri,MO,South,1111 Walnut St.,St. Louis,63101,314,5559874,19
+1015,Eastern Missouri,MO,East,1212 Magnolia Blvd.,Columbia,65201,573,5551239,19
+1016,Western Missouri,MO,West,1313 Chestnut Ave.,Springfield,65801,417,5558761,19
+1017,Northern Wisconsin,WI,North,1414 Fir St.,Madison,53701,608,5552345,20
+1018,Southern Wisconsin,WI,South,1515 Sycamore Rd.,Milwaukee,53201,414,5556784,20
+1019,Eastern Wisconsin,WI,East,1616 Maplewood Ct.,Green Bay,54301,920,5550987,20
+1020,Western Wisconsin,WI,West,1717 Evergreen St.,Eau Claire,54701,715,5552346,20
+1021,Headquarters,IL,North,202 Lakeside Dr.,Chicago,60602,312,5554567,0

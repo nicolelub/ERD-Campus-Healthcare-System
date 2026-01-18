@@ -1,0 +1,26 @@
+unique_id,doctor_code,certification_code,certification_name,awarding_group,certification_date,expiration_date
+1,4,1,Board Certified Neurologist,OSOA,2/8/2021,6/3/2030
+2,1,32,Board Certified Surgeon,AACP,1/13/2021,12/2/2028
+3,7,28,Board Certified Surgeon,OSOA,4/13/2021,6/21/2030
+4,11,42,Licensed Psychiatrist,AMA,3/16/2022,5/7/2026
+5,6,47,Fellowship Trained Cardiologist,AMA,9/10/2020,3/24/2030
+6,1,18,Certified Dermatologist,AACP,11/21/2022,6/29/2026
+7,15,38,Registered Pediatrician,OSOA,1/8/2023,5/16/2028
+8,8,78,Licensed Psychiatrist,AMA,2/17/2021,4/30/2029
+9,10,61,Fellowship Trained Cardiologist,OSOA,1/29/2024,7/20/2026
+10,16,40,Registered Pediatrician,AMA,2/2/2021,11/8/2026
+11,14,48,Board Certified Neurologist,AACP,10/5/2020,6/5/2030
+12,16,36,Board Certified Surgeon,NNRP,12/13/2022,10/11/2027
+13,13,4,Certified Orthopedic Surgeon,AMA,4/2/2023,2/10/2028
+14,20,74,Licensed Psychiatrist,AMA,1/1/2022,7/24/2026
+15,9,71,Registered Pediatrician,AMA,6/14/2021,10/14/2025
+16,19,72,Certified Dermatologist,OSOA,10/21/2023,5/28/2030
+17,17,24,Certified Orthopedic Surgeon,AMA,1/7/2024,6/25/2027
+18,17,91,Registered Pediatrician,AMA,3/12/2021,11/25/2025
+19,14,91,Fellowship Trained Cardiologist,AACP,4/17/2021,4/26/2027
+20,15,6,Certified Medical Specialist,OSOA,1/14/2024,7/27/2029
+21,8,87,Board Certified Neurologist,OSOA,10/10/2023,6/6/2026
+22,6,81,Certified Dermatologist,NNRP,10/17/2020,9/8/2029
+23,18,3,Certified Dermatologist,AMA,11/10/2021,10/23/2025
+24,9,10,Accredited Ophthalmologist,NNRP,5/7/2023,5/29/2026
+25,6,2,Registered Pediatrician,AMA,3/27/2021,8/22/2028
